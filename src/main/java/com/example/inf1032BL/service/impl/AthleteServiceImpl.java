@@ -27,4 +27,19 @@ public class AthleteServiceImpl implements AthleteService {
     public List<Athlete> getAllAthletes() {
         return athleteRepository.findAll();
     }
+
+    @Override
+    public Athlete createNewAthlete(Athlete athlete) {
+        return athleteRepository.save(athlete);
+    }
+
+    @Override
+    public Athlete updateAthlete(Athlete athlete) {
+        return athleteRepository.save(athlete);
+    }
+
+    @Override
+    public void deleteById(UUID id) {
+        athleteRepository.deleteById(id);
+    }
 }

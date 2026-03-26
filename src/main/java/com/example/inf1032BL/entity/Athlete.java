@@ -26,7 +26,7 @@ public class Athlete {
 
     public AthleteDTO toDTO() {
         return new AthleteDTO(
-                this.id,
+                this.id.toString(),
                 this.username,
                 this.nom,
                 this.prenom,
@@ -34,7 +34,7 @@ public class Athlete {
                 this.tel,
                 this.sexe,
                 this.dateNaiss,
-                this.coachId
+                this.coachId.toString()
         );
     }
 }

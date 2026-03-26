@@ -34,8 +34,7 @@ public class SecurityConfig  {
                 .exceptionHandling(ehc -> ehc.authenticationEntryPoint(jwtEntryPoint))
                 .sessionManagement(session -> session.sessionCreationPolicy(SessionCreationPolicy.STATELESS))
                 .authorizeHttpRequests(req -> req
-                                .requestMatchers("/bl/coach/create-account").permitAll()
-//                                .requestMatchers("/student/all").hasAuthority(ADMIN.name()) //added this instead of @PreAuthorize DOESNT WORK ALLOWS ANY AUTH USER TO ACCESS
+                                .requestMatchers("/bl/coach/create-account", "/bl/athlete/create-account").permitAll()
                                 .anyRequest().authenticated()
                 );
         http.addFilterBefore(new JwtAuthFilter(jwtService),

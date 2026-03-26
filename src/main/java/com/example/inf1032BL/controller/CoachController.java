@@ -1,7 +1,6 @@
 package com.example.inf1032BL.controller;
 
 import com.example.inf1032BL.entity.Coach;
-import com.example.inf1032BL.service.AthleteService;
 import com.example.inf1032BL.service.CoachService;
 import dto.CoachDTO;
 import org.springframework.http.HttpStatus;
@@ -48,7 +47,9 @@ public class CoachController {
     }
 
     @PutMapping(path = "{id}")
-    public ResponseEntity<String> updateCoach(@PathVariable("id") Coach coach) {
+    public ResponseEntity<String> updateCoach(@RequestBody CoachDTO coachDTO) {
+        Coach coach = coachDTO.toModel();
+        System.out.println("Coach to be updated: " + coach.toString());
         Coach c = coachService.updateCoach(coach);
         return (c != null) ? ResponseEntity.ok("Success") : ResponseEntity.status(HttpStatus.FORBIDDEN).body("Error");
     }
@@ -58,6 +59,4 @@ public class CoachController {
         coachService.deleteById(id);
         return ResponseEntity.ok("Success");
     }
-
-
 }

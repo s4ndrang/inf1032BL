@@ -1,11 +1,19 @@
 package dto;
 
 import com.example.inf1032BL.entity.Athlete;
+import com.example.inf1032BL.entity.Athlete;
+import lombok.*;
 
 import java.util.UUID;
 
+@Data
+@Getter
+@Setter
+@NoArgsConstructor
+@AllArgsConstructor
+@ToString
 public class AthleteDTO {
-    UUID id;
+    String id;
     String username;
     String nom;
     String prenom;
@@ -13,31 +21,19 @@ public class AthleteDTO {
     String tel;
     String sexe;
     String dateNaiss;
-    UUID coachId;
-
-    public AthleteDTO(UUID id, String username, String nom, String prenom, String email, String tel, String sexe, String dateNaiss, UUID coachId) {
-        this.id = id;
-        this.username = username;
-        this.nom = nom;
-        this.prenom = prenom;
-        this.email = email;
-        this.tel = tel;
-        this.sexe = sexe;
-        this.dateNaiss = dateNaiss;
-        this.coachId = coachId;
-    }
+    String coachId;
 
     public Athlete toModel() {
-        return new Athlete(
-                this.id,
-                this.username,
-                this.nom,
-                this.prenom,
-                this.email,
-                this.tel,
-                this.sexe,
-                this.dateNaiss,
-                this.coachId
-        );
+        Athlete athlete = new Athlete();
+        athlete.setId(UUID.fromString(this.getId()));
+        athlete.setUsername(this.getUsername());
+        athlete.setNom(this.getNom());
+        athlete.setPrenom(this.getPrenom());
+        athlete.setEmail(this.getEmail());
+        athlete.setTel(this.getTel());
+        athlete.setSexe(this.getSexe());
+        athlete.setDateNaiss(this.getDateNaiss());
+        athlete.setCoachId(UUID.fromString(this.getCoachId()));
+        return athlete;
     }
 }

@@ -37,15 +37,16 @@ public class CoachServiceImpl implements CoachService {
     public Coach updateCoach(Coach coach) {
         return coachRepository.save(coach);
     }
-    /* @Override
-    @Transactional
-    public void update(String id, Patient updatedPatient) {
-        patientRepository.findById(id).orElseThrow(() -> new IllegalStateException("Patient " + id + " n'existe pas"));
-        patientRepository.save(updatedPatient);
-    }*/
 
     @Override
     public void deleteById(UUID id) {
         coachRepository.deleteById(id);
     }
 }
+
+ /* @Override
+    @Transactional
+    public void update(String id, Patient updatedPatient) {
+        patientRepository.findById(id).orElseThrow(() -> new IllegalStateException("Patient " + id + " n'existe pas"));
+        patientRepository.save(updatedPatient);
+    }*/
