@@ -1,0 +1,100 @@
+package com.example.inf1032BL.service.impl;
+
+import com.auth0.jwt.JWT;
+import com.auth0.jwt.JWTVerifier;
+import com.auth0.jwt.algorithms.Algorithm;
+import com.auth0.jwt.interfaces.DecodedJWT;
+import com.example.inf1032BL.beans.JwtConfigBean;
+import com.example.inf1032BL.service.JwtService;
+import com.google.gson.Gson;
+import jakarta.servlet.http.HttpServletRequest;
+import lombok.extern.slf4j.Slf4j;
+import org.springframework.security.core.GrantedAuthority;
+import org.springframework.security.core.authority.SimpleGrantedAuthority;
+import org.springframework.security.core.userdetails.UserDetails;
+import org.springframework.stereotype.Component;
+import org.springframework.util.StringUtils;
+
+import java.util.ArrayList;
+import java.util.Collection;
+import java.util.List;
+
+@Slf4j
+@Component
+public class JwtServiceImpl implements JwtService {
+
+    private final JwtConfigBean jwtContants;
+
+    public JwtServiceImpl(JwtConfigBean jwtContants){
+        this.jwtContants = jwtContants;
+    }
+
+    @Override
+    public String getJwtToken(HttpServletRequest request) {
+
+        String headerAuth = request.getHeader(jwtContants.getTokenHeader());
+        if (StringUtils.hasText(headerAuth) && headerAuth.startsWith(jwtContants.getTokenPrefix())){
+            return headerAuth.replace(jwtContants.getTokenPrefix(), "").trim();
+        }
+        return null;
+    }
+
+    @Override
+    public UserDetails extractUser(String token) {
+        DecodedJWT jwtToken = decodeToken(token);
+        return new UserDetails() {
+            @Override
+            public Collection<? extends GrantedAuthority> getAuthorities() {
+                System.out.println("PAYLOAD ID: " + jwtToken.getClaim("userId").asString());
+                System.out.println("PAYLOAD username: " + getUsername());
+                String json = jwtToken.getClaim("role").asString();
+                System.out.println("PAYLOAD role: " + json);
+                String[] roles =  new Gson().fromJson(json, String[].class);
+                List<SimpleGrantedAuthority> auths = new ArrayList<>();
+                for(String role:roles) {
+                    System.out.println("Roles: " + role);
+                    auths.add(new SimpleGrantedAuthority(role));
+                }
+                return auths;
+            }
+
+            @Override
+            public String getPassword() {
+                return null;
+            }
+
+            @Override
+            public String getUsername() {
+                return jwtToken.getSubject();
+            }
+
+            @Override
+            public boolean isAccountNonExpired() {
+                return false;
+            }
+
+            @Override
+            public boolean isAccountNonLocked() {
+                return false;
+            }
+
+            @Override
+            public boolean isCredentialsNonExpired() {
+                return false;
+            }
+
+            @Override
+            public boolean isEnabled() {
+                return false;
+            }
+        };
+    }
+
+    private DecodedJWT decodeToken(String token) {
+        Algorithm algorithm = Algorithm.HMAC256(jwtContants.getSecret());
+        JWTVerifier verifier = JWT.require(algorithm)
+                .withIssuer(jwtContants.getTokenIssuer())
+                .build();
+        return verifier.verify(token);
+    }
+}
