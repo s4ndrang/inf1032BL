@@ -1,6 +1,8 @@
 package com.example.inf1032BL.controller;
 
+import com.example.inf1032BL.entity.Adresse;
 import com.example.inf1032BL.entity.Training;
+import com.example.inf1032BL.service.AdresseService;
 import com.example.inf1032BL.service.TrainingService;
 import dto.TrainingDTO;
 import org.springframework.http.HttpStatus;
@@ -15,18 +17,29 @@ import java.util.UUID;
 @RequestMapping("/bl/training/")
 public class TrainingController {
     private final TrainingService trainingService;
+    private final AdresseService adresseService;
 
-    public TrainingController(TrainingService trainingService) {
+    public TrainingController(TrainingService trainingService,  AdresseService adresseService) {
         this.trainingService = trainingService;
+        this.adresseService = adresseService;
     }
-    @PostMapping(path = "create-account", produces="application/json")
+    @PostMapping(path = "create", produces="application/json")
     public ResponseEntity<String> createTraining(@RequestBody TrainingDTO trainingDTO) {
+        System.out.println("Training to be created: " + trainingDTO.toString());
+        Training training = trainingDTO.toModel();
+        if (!isAdresseExist(training.getLieu().getId())) {
+            adresseService.createNewAdresse(training.getLieu());
+        }
         Training savedTraining = trainingService.createNewTraining(trainingDTO.toModel());
         return savedTraining != null?  ResponseEntity
                 .ok("Success") :
                 ResponseEntity
                         .status(HttpStatus.FORBIDDEN)
                         .body("Error");
+    }
+
+    private boolean isAdresseExist(UUID id) {
+        return adresseService.existsById(id);
     }
 
     //The @Secured annotation is used to specify a list of roles on a method. So, a user only can access that method if she has at least one of the specified roles.

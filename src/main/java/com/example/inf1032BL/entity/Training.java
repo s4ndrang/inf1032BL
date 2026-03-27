@@ -6,9 +6,7 @@ import org.springframework.data.mongodb.core.mapping.Document;
 
 import java.util.List;
 import java.util.UUID;
-import java.util.stream.Collectors;
 
-@Data
 @ToString
 @Getter
 @Setter
@@ -19,7 +17,7 @@ public class Training {
     private UUID id;
     private String nom;
     private String date;
-    private String lieu;
+    private Adresse lieu;
     private String duree;
     private String coachId;
     private String commentaires;
@@ -32,7 +30,7 @@ public class Training {
                 this.id.toString(),
                 this.nom,
                 this.date,
-                this.lieu,
+                this.lieu.toDTO(),
                 this.duree,
                 this.coachId,
                 this.commentaires,

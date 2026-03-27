@@ -6,7 +6,6 @@ import lombok.*;
 import java.util.List;
 import java.util.UUID;
 
-@Data
 @Getter
 @Setter
 @NoArgsConstructor
@@ -16,7 +15,7 @@ public class TrainingDTO {
     private String id;
     private String nom;
     private String date;
-    private String lieu;
+    private AdresseDTO lieu;
     private String duree;
     private String coachId;
     private String commentaires;
@@ -29,7 +28,7 @@ public class TrainingDTO {
         training.setId(UUID.fromString(this.getId()));
         training.setNom(this.getNom());
         training.setDate(this.getDate());
-        training.setLieu(this.getLieu());
+        training.setLieu(this.getLieu().toModel());
         training.setDuree(this.getDuree());
         training.setCoachId(this.getCoachId());
         training.setCommentaires(this.getCommentaires());
