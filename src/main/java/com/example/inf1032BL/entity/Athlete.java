@@ -21,7 +21,7 @@ public class Athlete {
     private String email;
     private String tel;
     private String sexe;
-    private String dateNaiss;
+    private Double dateNaiss;
     private UUID coachId;
 
     public AthleteDTO toDTO() {

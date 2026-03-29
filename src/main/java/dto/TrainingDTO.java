@@ -1,6 +1,7 @@
 package dto;
 
 import com.example.inf1032BL.entity.Training;
+import com.fasterxml.jackson.annotation.JsonProperty;
 import lombok.*;
 
 import java.util.List;
@@ -14,11 +15,12 @@ import java.util.UUID;
 public class TrainingDTO {
     private String id;
     private String nom;
-    private String date;
+    private Double date;
     private AdresseDTO lieu;
-    private String duree;
+    private int duree;
     private String coachId;
     private String commentaires;
+    @JsonProperty("archived")
     private boolean isArchived;
     private List<String> presentIds;
     private List<String> absentIds;

@@ -9,8 +9,8 @@ import java.util.UUID;
 public interface AdresseService {
     boolean existsById(UUID id);
     Adresse createNewAdresse(Adresse adresse);
-    /*List<Adresse> getAllAdresses();
-    Adresse getAdresse(UUID id);
+    List<Adresse> getAllAdresses();
+    /*Adresse getAdresse(UUID id);
     Adresse updateAdresse(Adresse adresse);
     void deleteById(UUID id);*/
 }

@@ -19,7 +19,7 @@ public class AthleteDTO {
     String email;
     String tel;
     String sexe;
-    String dateNaiss;
+    Double dateNaiss;
     String coachId;
 
     public Athlete toModel() {

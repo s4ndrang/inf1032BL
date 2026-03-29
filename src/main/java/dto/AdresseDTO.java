@@ -13,24 +13,18 @@ import java.util.UUID;
 @NoArgsConstructor
 public class AdresseDTO {
     private String id;
-    private String numero;
-    private String rue;
-    private String numeroApt;
-    private String ville;
-    private String province;
-    private String pays;
-    private String cp;
+    private String name;
+    private String adresse;
+    private Double latitude;
+    private Double longitude;
 
     public Adresse toModel() {
         return new Adresse(
                 UUID.fromString(this.id),
-                this.numero,
-                this.rue,
-                this.numeroApt,
-                this.ville,
-                this.province,
-                this.pays,
-                this.cp
+                this.name,
+                this.adresse,
+                this.latitude,
+                this.longitude
         );
     }
 }

@@ -39,7 +39,7 @@ public class CoachController {
                 .toList();
     }
 
-    @PreAuthorize("hasAnyAuthority('coach') or hasAnyAuthority('admin')")
+    @PreAuthorize("hasAnyAuthority('ROLE_COACH')")
     @GetMapping(path = "{id}")
     public CoachDTO fetchCoach(@PathVariable("id") UUID id) {
         Coach coach = coachService.getCoach(id);

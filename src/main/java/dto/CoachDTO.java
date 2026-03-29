@@ -18,7 +18,8 @@ public class CoachDTO {
     String email;
     String tel;
     String sexe;
-    String dateDebut;
+    Double dateDebut;
+    //String dateDebut;
 
     public Coach toModel() {
         Coach coach = new Coach();

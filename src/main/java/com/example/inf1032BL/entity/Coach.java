@@ -21,7 +21,8 @@ public class Coach {
     String email;
     String tel;
     String sexe;
-    String dateDebut;
+    Double dateDebut;
+    //String dateDebut;
 
     public CoachDTO toDTO() {
         return new CoachDTO(

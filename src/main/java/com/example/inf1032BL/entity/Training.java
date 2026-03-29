@@ -1,5 +1,6 @@
 package com.example.inf1032BL.entity;
 
+import com.fasterxml.jackson.annotation.JsonProperty;
 import dto.TrainingDTO;
 import lombok.*;
 import org.springframework.data.mongodb.core.mapping.Document;
@@ -16,9 +17,9 @@ import java.util.UUID;
 public class Training {
     private UUID id;
     private String nom;
-    private String date;
+    private Double date;
     private Adresse lieu;
-    private String duree;
+    private int duree;
     private String coachId;
     private String commentaires;
     private boolean isArchived;

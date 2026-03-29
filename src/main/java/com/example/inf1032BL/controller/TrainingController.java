@@ -1,6 +1,5 @@
 package com.example.inf1032BL.controller;
 
-import com.example.inf1032BL.entity.Adresse;
 import com.example.inf1032BL.entity.Training;
 import com.example.inf1032BL.service.AdresseService;
 import com.example.inf1032BL.service.TrainingService;
@@ -45,7 +44,7 @@ public class TrainingController {
     //The @Secured annotation is used to specify a list of roles on a method. So, a user only can access that method if she has at least one of the specified roles.
     //@PreAuthorize("hasAnyAuthority('ADMIN')")
     @GetMapping(path = "all")
-    public List<TrainingDTO> fetchAllTraininges() {
+    public List<TrainingDTO> fetchAllTrainings() {
         List<Training> traininges = trainingService.getAllTraininges();
         return traininges.stream()
                 .map(Training::toDTO)
