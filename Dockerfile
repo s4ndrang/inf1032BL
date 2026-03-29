@@ -23,4 +23,4 @@ RUN ./mvnw clean package -DskipTests
 EXPOSE 8080
 
 # Set the start command
-CMD ["java", "-jar", "/app/target/inf1032BL-0.0.1-SNAPSHOT.jar"]
+CMD ["java", "-jar", "/app/target/inf1032-0.0.1-SNAPSHOT.jar"]
