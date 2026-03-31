@@ -64,7 +64,7 @@ public class CoachController {
         return ResponseEntity.ok("Success");
     }
 
-    @GetMapping("/health")
+    @GetMapping("health")
     public String health() {
         return "OK";
     }
