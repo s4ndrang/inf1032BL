@@ -59,4 +59,9 @@ public class CoachController {
         coachService.deleteById(id);
         return ResponseEntity.ok("Success");
     }
+
+    @GetMapping("/health")
+    public String health() {
+        return "OK";
+    }
 }

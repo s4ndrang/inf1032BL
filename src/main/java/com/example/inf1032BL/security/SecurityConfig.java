@@ -17,7 +17,11 @@ import org.springframework.security.web.authentication.UsernamePasswordAuthentic
 @EnableWebSecurity
 @EnableMethodSecurity
 public class SecurityConfig  {
-
+    private static final String[] BL_WHITELIST = {
+            "/bl/coach/create-account",
+            "/bl/athlete/create-account",
+            "/bl/coach/health"
+    };
     private final JwtAuthenticationEntryPoint jwtEntryPoint;
     private final JwtService jwtService;
 
@@ -34,7 +38,7 @@ public class SecurityConfig  {
                 .exceptionHandling(ehc -> ehc.authenticationEntryPoint(jwtEntryPoint))
                 .sessionManagement(session -> session.sessionCreationPolicy(SessionCreationPolicy.STATELESS))
                 .authorizeHttpRequests(req -> req
-                                .requestMatchers("/bl/coach/create-account", "/bl/athlete/create-account").permitAll()
+                                .requestMatchers(BL_WHITELIST).permitAll()
                                 .anyRequest().authenticated()
                 );
         http.addFilterBefore(new JwtAuthFilter(jwtService),
