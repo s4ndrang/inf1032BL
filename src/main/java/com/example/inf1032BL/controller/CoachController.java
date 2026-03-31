@@ -19,9 +19,13 @@ public class CoachController {
     public CoachController(CoachService coachService) {
         this.coachService = coachService;
     }
+
     @PostMapping(path = "create-account", produces="application/json")
     public ResponseEntity<String> createCoach(@RequestBody CoachDTO coachDTO) {
         Coach savedCoach = coachService.createNewCoach(coachDTO.toModel());
+        System.out.println("CREATE COACH ACCOUNT: ");
+        System.out.println(coachDTO);
+        if (savedCoach != null) System.out.println(savedCoach);
         return savedCoach != null?  ResponseEntity
                 .ok("Success") :
                 ResponseEntity
