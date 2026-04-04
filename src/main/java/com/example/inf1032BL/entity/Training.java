@@ -6,7 +6,9 @@ import lombok.*;
 import org.springframework.data.mongodb.core.mapping.Document;
 
 import java.util.List;
+import java.util.Map;
 import java.util.UUID;
+import java.util.stream.Collectors;
 
 @ToString
 @Getter
@@ -18,26 +20,28 @@ public class Training {
     private UUID id;
     private String nom;
     private Double date;
-    private Adresse lieu;
+    private UUID adresseId;
     private int duree;
     private String coachId;
     private String commentaires;
     private boolean isArchived;
-    private List<UUID> presentIds;
-    private List<UUID> absentIds;
+    private Map<String, Integer> athletePresenceMap;
+    private Map<String, Integer> athleteActualPresenceMap;
+    private List<String> photos;
 
     public TrainingDTO toDTO() {
         return new TrainingDTO(
                 this.id.toString(),
                 this.nom,
                 this.date,
-                this.lieu.toDTO(),
+                this.adresseId.toString(),
                 this.duree,
                 this.coachId,
                 this.commentaires,
                 this.isArchived,
-                this.presentIds.stream().map(UUID::toString).toList(),
-                this.absentIds.stream().map(UUID::toString).toList()
+                this.athletePresenceMap,
+                this.athleteActualPresenceMap,
+                this.photos
         );
     }
 }

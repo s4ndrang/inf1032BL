@@ -20,6 +20,7 @@ public class SecurityConfig  {
     private static final String[] BL_WHITELIST = {
             "/bl/coach/create-account",
             "/bl/athlete/create-account",
+            "/bl/coach/all",
             "/bl/coach/health"
     };
     private final JwtAuthenticationEntryPoint jwtEntryPoint;
