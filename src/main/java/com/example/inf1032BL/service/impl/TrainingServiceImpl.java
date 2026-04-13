@@ -4,6 +4,7 @@ import com.example.inf1032BL.entity.Training;
 import com.example.inf1032BL.repository.TrainingRepository;
 import com.example.inf1032BL.service.TrainingService;
 import org.springframework.stereotype.Service;
+import org.springframework.web.multipart.MultipartFile;
 
 import java.util.List;
 import java.util.Optional;
@@ -42,4 +43,9 @@ public class TrainingServiceImpl implements TrainingService {
     public void deleteById(UUID id) {
         trainingRepository.deleteById(id);
     }
+
+//    @Override
+//    public String savePhoto(UUID id, MultipartFile file) {
+//        return photoRepository.savePhoto(id, file);
+//    }
 }

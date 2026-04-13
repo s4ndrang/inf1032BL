@@ -19,7 +19,6 @@ public class CoachDTO {
     String tel;
     String sexe;
     Double dateDebut;
-    //String dateDebut;
 
     public Coach toModel() {
         Coach coach = new Coach();
