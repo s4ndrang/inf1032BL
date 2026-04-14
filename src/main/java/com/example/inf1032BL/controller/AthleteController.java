@@ -36,15 +36,16 @@ public class AthleteController {
     @GetMapping(path = "all")
     public List<AthleteDTO> fetchAllAthletes() {
         List<Athlete> athletees = athleteService.getAllAthletes();
+        System.out.println("Athletes count: " + athletees.size());
         return athletees.stream()
                 .map(Athlete::toDTO)
                 .toList();
     }
 
-    @PreAuthorize("hasAnyAuthority('athlete') or hasAnyAuthority('admin')")
     @GetMapping(path = "{id}")
     public AthleteDTO fetchAthlete(@PathVariable("id") UUID id) {
         Athlete athlete = athleteService.getAthlete(id);
+        System.out.println("Athlete fetched: " + athlete);
         return athlete.toDTO();
     }
 

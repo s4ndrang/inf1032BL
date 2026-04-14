@@ -49,7 +49,6 @@ public class TrainingController {
                 .toList();
     }
 
-    @PreAuthorize("hasAnyAuthority('training') or hasAnyAuthority('admin')")
     @GetMapping(path = "{id}")
     public TrainingDTO fetchTraining(@PathVariable("id") UUID id) {
         Training training = trainingService.getTraining(id);

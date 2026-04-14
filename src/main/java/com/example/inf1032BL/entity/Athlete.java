@@ -21,6 +21,7 @@ public class Athlete {
     private String email;
     private String tel;
     private String sexe;
+    private Double dateDebut;
     private Double dateNaiss;
     private UUID coachId;
 
@@ -33,6 +34,7 @@ public class Athlete {
                 this.email,
                 this.tel,
                 this.sexe,
+                this.dateDebut,
                 this.dateNaiss,
                 this.coachId.toString()
         );

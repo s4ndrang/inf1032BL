@@ -44,14 +44,10 @@ public class JwtServiceImpl implements JwtService {
         return new UserDetails() {
             @Override
             public Collection<? extends GrantedAuthority> getAuthorities() {
-                System.out.println("PAYLOAD ID: " + jwtToken.getClaim("userId").asString());
-                System.out.println("PAYLOAD username: " + getUsername());
                 List<String> roles = jwtToken.getClaim("role").asList(String.class);
                 List<SimpleGrantedAuthority> auths = new ArrayList<>();
                 for(String role:roles) {
-                    System.out.println("Roles: " + role);
                     auths.add(new SimpleGrantedAuthority("ROLE_" + role.toUpperCase()));
-                    //auths.add(new SimpleGrantedAuthority(role));
                 }
                 return auths;
             }

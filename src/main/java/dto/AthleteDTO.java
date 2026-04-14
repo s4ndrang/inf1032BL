@@ -19,6 +19,7 @@ public class AthleteDTO {
     String email;
     String tel;
     String sexe;
+    Double dateDebut;
     Double dateNaiss;
     String coachId;
 
@@ -31,6 +32,7 @@ public class AthleteDTO {
         athlete.setEmail(this.getEmail());
         athlete.setTel(this.getTel());
         athlete.setSexe(this.getSexe());
+        athlete.setDateDebut(this.getDateDebut());
         athlete.setDateNaiss(this.getDateNaiss());
         athlete.setCoachId(UUID.fromString(this.getCoachId()));
         return athlete;
