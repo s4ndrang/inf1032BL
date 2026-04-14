@@ -8,7 +8,7 @@ import org.springframework.web.multipart.MultipartFile;
 import java.util.UUID;
 
 public interface PhotoRepository extends MongoRepository<Photo, UUID> {
-    void deleteByUrl(String url);
+    Photo[] findByTrainingId(UUID trainingId);
 }
 
 //String savePhoto(UUID id, MultipartFile file);

@@ -1,10 +1,7 @@
 package com.example.inf1032BL.service.impl;
 
-import com.example.inf1032BL.entity.Coach;
 import com.example.inf1032BL.entity.Photo;
-import com.example.inf1032BL.repository.CoachRepository;
 import com.example.inf1032BL.repository.PhotoRepository;
-import com.example.inf1032BL.service.CoachService;
 import com.example.inf1032BL.service.PhotoService;
 import org.springframework.stereotype.Service;
 
@@ -33,33 +30,17 @@ public class PhotoServiceImpl implements PhotoService {
     }
 
     @Override
-    public void deleteByUrl(String url) {
-        photoRepository.deleteByUrl(url);
+    public void deleteById(UUID id) {
+        photoRepository.deleteById(id);
     }
 
-//    @Override
-//    public Coach getCoach(UUID id) {
-//        Optional<Coach> coach = photoRepository.findById(id);
-//        return coach.orElse(null);
-//    }
-//
-//    @Override
-//    public List<Coach> getAllCoaches() {
-//        return photoRepository.findAll();
-//    }
-//
-//    @Override
-//    public Coach createNewCoach(Coach coach) {
-//       return photoRepository.save(coach);
-//    }
-//
-//    @Override
-//    public Coach updateCoach(Coach coach) {
-//        return photoRepository.save(coach);
-//    }
-//
-//    @Override
-//    public void deleteById(UUID id) {
-//        photoRepository.deleteById(id);
-//    }
+    @Override
+    public Photo findById(UUID id) {
+        return photoRepository.findById(id).isPresent() ? photoRepository.findById(id).get() : null;
+    }
+
+    @Override
+    public Photo[] findByTrainingId(UUID id) {
+        return photoRepository.findByTrainingId(id);
+    }
 }

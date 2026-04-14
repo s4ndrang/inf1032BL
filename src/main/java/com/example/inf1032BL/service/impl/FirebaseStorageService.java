@@ -13,6 +13,7 @@ import org.springframework.stereotype.Service;
 @Service
 public class FirebaseStorageService implements StorageService {
 
+    public static final String PHOTO_FOLDER = "photo/";
     private final FirebaseApp firebaseApp;
 
     public FirebaseStorageService(FirebaseApp firebaseApp) {
@@ -26,17 +27,17 @@ public class FirebaseStorageService implements StorageService {
         Bucket bucket = storageClient.bucket();
 
         bucket.create(
-                filename,
+                PHOTO_FOLDER + filename,
                 inputStream,
                 contentType
         );
-        //https://firebasestorage.googleapis.com/v0/b/inf1030tp.firebasestorage.app/o/4bf741e7-2c93-43aa-acbc-d21c3e8a7b8e.jpg
-        return "https://firebasestorage.googleapis.com/v0/b/" + bucket.getName() + "/o/" + filename + "?alt=media";
+        //https://firebasestorage.googleapis.com/v0/b/inf1030tp.firebasestorage.app/o/photo%2F4bf741e7-2c93-43aa-acbc-d21c3e8a7b8e.jpg
+        return "https://firebasestorage.googleapis.com/v0/b/" + bucket.getName() + "/o/photo%2F" + filename + "?alt=media";
     }
 
     public boolean delete(String filename) {
         Bucket bucket = StorageClient.getInstance().bucket();
-        return bucket.get(filename).delete();
+        return bucket.get(PHOTO_FOLDER + filename).delete();
     }
 
 }

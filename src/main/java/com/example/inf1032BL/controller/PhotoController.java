@@ -5,21 +5,18 @@ import com.example.inf1032BL.entity.Training;
 import com.example.inf1032BL.service.PhotoService;
 import com.example.inf1032BL.service.StorageService;
 import com.example.inf1032BL.service.TrainingService;
+import com.example.inf1032BL.service.impl.FirebaseStorageService;
 import com.google.type.DateTime;
 import dto.PhotoDTO;
 import dto.TrainingDTO;
 import org.springframework.http.HttpStatus;
+import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
-import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.MultipartFile;
 
 import java.io.IOException;
 import java.time.Instant;
-import java.time.LocalDate;
-import java.time.LocalDateTime;
-import java.util.Date;
-import java.util.List;
 import java.util.UUID;
 
 @RestController
@@ -28,16 +25,17 @@ public class PhotoController {
     private final PhotoService photoService;
     private final StorageService storageService;
 
+
     public PhotoController(PhotoService photoService, StorageService storageService) {
         this.photoService = photoService;
         this.storageService = storageService;
     }
 
-    @PostMapping(path = "{trainingId}/{userId}", consumes = "multipart/form-data")
+    @PostMapping(path = "{trainingId}/{userId}", consumes = MediaType.MULTIPART_FORM_DATA_VALUE)
     public ResponseEntity<PhotoDTO> createPhoto(
             @RequestParam("file") MultipartFile file,
             @PathVariable("trainingId") UUID trainingId,
-             @PathVariable("userId") UUID userId
+            @PathVariable("userId") UUID userId
     ) throws IOException {
         System.out.println("Coach is trying to create a photo: ");
         System.out.println("FOR: " + trainingId.toString());
@@ -58,9 +56,7 @@ public class PhotoController {
                 safeFilename,
                 file.getContentType()
         );
-        System.out.println("URL: " + url);
         Photo photo = new Photo(photoId, trainingId, userId, safeFilename, url, (double) Instant.now().getEpochSecond());
-        System.out.println("photo: " + photo.toString());
         try {
             Photo savedPhoto = photoService.createPhoto(photo);
             return ResponseEntity.ok(savedPhoto.toDTO());
@@ -73,10 +69,24 @@ public class PhotoController {
         }
     }
 
-    @DeleteMapping(path = "{url}")
-    public ResponseEntity<String> deletePhoto(@PathVariable("url") String url) {
-        System.out.println("Photo to be deleted: " + url.toString());
-        photoService.deleteByUrl(url);
+    @DeleteMapping(path = "{id}")
+    public ResponseEntity<String> deletePhoto(@PathVariable("id") UUID id) {
+        System.out.println("Photo to be deleted: " + id);
+        Photo photo = photoService.findById(id);
+        if (photo != null) {
+            storageService.delete(photo.getFilename());
+            photoService.deleteById(id);
+        }
+        return ResponseEntity.ok("Success");
+    }
+
+    @DeleteMapping(path = "training/{trainingId}")
+    public ResponseEntity<String> deletePhotosOfTraining(@PathVariable("trainingId") UUID trainingId) {
+        Photo[] photos = photoService.findByTrainingId(trainingId);
+        for (Photo photo : photos) {
+            storageService.delete(photo.getFilename());
+            photoService.deleteById(photo.getId());
+        }
         return ResponseEntity.ok("Success");
     }
 }

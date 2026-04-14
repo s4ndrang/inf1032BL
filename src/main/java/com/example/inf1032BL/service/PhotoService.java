@@ -10,5 +10,7 @@ import java.util.UUID;
 public interface PhotoService {
     List<Photo> getAllPhotosByTrainingId(UUID id);
     Photo createPhoto(Photo photo);
-    void deleteByUrl(String url);
+    void deleteById(UUID id);
+    Photo findById(UUID id);
+    Photo[] findByTrainingId(UUID id);
 }

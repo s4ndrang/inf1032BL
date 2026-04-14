@@ -16,7 +16,7 @@ import java.security.PublicKey;
 @Configuration
 public class FirebaseConfig {
 
-    @Bean
+    /*@Bean
     public GoogleCredentials googleCredentials() throws IOException {
         String json = System.getenv("GOOGLE_CREDENTIALS");
 
@@ -27,23 +27,23 @@ public class FirebaseConfig {
         return GoogleCredentials.fromStream(
                 new ByteArrayInputStream(json.getBytes())
         );
-    }
+    }*/
 
     @Bean
     public FirebaseApp firebaseApp() throws Exception {
 
-        GoogleCredentials credentials = googleCredentials();
-        /*InputStream serviceAccount =
+        //GoogleCredentials credentials = googleCredentials();
+        InputStream serviceAccount =
                 getClass().getClassLoader()
                         .getResourceAsStream("serviceAccountKey.json");
 
         if (serviceAccount == null) {
             throw new IllegalStateException("Firebase service account file not found in resources");
-        }*/
+        }
 
         FirebaseOptions options = FirebaseOptions.builder()
-                .setCredentials(credentials)
-                //.setCredentials(GoogleCredentials.fromStream(serviceAccount))
+                //.setCredentials(credentials)
+                .setCredentials(GoogleCredentials.fromStream(serviceAccount))
                 .setStorageBucket("inf1030tp.firebasestorage.app")
                 .build();
 
