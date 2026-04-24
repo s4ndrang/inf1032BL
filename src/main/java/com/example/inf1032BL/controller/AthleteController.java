@@ -45,8 +45,13 @@ public class AthleteController {
     @GetMapping(path = "{id}")
     public AthleteDTO fetchAthlete(@PathVariable("id") UUID id) {
         Athlete athlete = athleteService.getAthlete(id);
-        System.out.println("Athlete fetched: " + athlete);
-        return athlete.toDTO();
+        if (athlete != null)  {
+            System.out.println("Athlete fetched: " + athlete);
+            return athlete.toDTO();
+        } else {
+            System.out.println("Athlete not found");
+            return null;
+        }
     }
 
     @PutMapping(path = "{id}")
